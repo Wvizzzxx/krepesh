@@ -1,0 +1,13 @@
+node_modules
+dist
+.env
+*.local
+.DS_Store
+coverage
+*.log
+.turbo
+*.orig
+
+# Uploaded files (keep directory structure, ignore actual files)
+apps/api/uploads/*
+!apps/api/uploads/.gitkeep

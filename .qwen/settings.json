@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir *)",
+      "Bash(pnpm install)",
+      "Bash(npx *)",
+      "Bash(pnpm add *)",
+      "Bash(timeout *)",
+      "Bash(tsx *)",
+      "Bash(findstr *)",
+      "Bash(curl *)",
+      "Bash(pnpm *)",
+      "Bash(tasklist *)",
+      "Bash(netstat *)",
+      "Bash(taskkill *)",
+      "Bash(sc *)",
+      "Bash(type *)",
+      "Bash(node *)",
+      "Bash(del *)",
+      "Bash(git init)",
+      "Bash(git add *)"
+    ]
+  },
+  "$version": 3
+}
