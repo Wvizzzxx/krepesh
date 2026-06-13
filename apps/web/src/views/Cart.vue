@@ -359,6 +359,115 @@ function getItemImage(item: any): string {
   font-size: 16px;
 }
 
+/* ===== Mobile (< 768px) ===== */
+@media (max-width: 767px) {
+  .cart-page {
+    padding: 20px 0;
+  }
+
+  .cart-page h1 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .cart-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .cart-item {
+    grid-template-columns: 60px 1fr;
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .item-image {
+    width: 60px;
+    height: 60px;
+    grid-row: span 2;
+  }
+
+  .item-info {
+    min-width: 0;
+  }
+
+  .item-name {
+    font-size: 14px;
+  }
+
+  .item-price {
+    font-size: 12px;
+  }
+
+  .item-quantity {
+    grid-column: 2;
+  }
+
+  .item-quantity button {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+
+  .item-quantity .quantity-input {
+    width: 36px;
+    height: 28px;
+    font-size: 13px;
+  }
+
+  .item-total {
+    min-width: auto;
+    font-size: 15px;
+    grid-column: 2;
+    text-align: left;
+  }
+
+  .item-remove {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 14px;
+    padding: 4px;
+  }
+
+  .cart-item {
+    position: relative;
+  }
+
+  .cart-summary {
+    position: static;
+    padding: 20px;
+  }
+
+  .cart-summary h3 {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .summary-row {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .summary-row.total {
+    font-size: 18px;
+  }
+
+  .btn-block {
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  .empty-cart h2 {
+    font-size: 20px;
+  }
+
+  .empty-cart p {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+}
+
 /* ===== Tablet (768px - 1024px) ===== */
 @media (min-width: 768px) and (max-width: 1024px) {
   .cart-page {

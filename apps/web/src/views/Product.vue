@@ -682,6 +682,139 @@ onMounted(async () => {
   font-weight: 600;
 }
 
+/* ===== Mobile (< 768px) ===== */
+@media (max-width: 767px) {
+  .product-page {
+    padding: 20px 0;
+  }
+
+  .breadcrumb {
+    margin-bottom: 16px;
+    font-size: 12px;
+    flex-wrap: wrap;
+  }
+
+  .product-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .product-gallery {
+    position: static;
+  }
+
+  .main-image {
+    min-height: 280px;
+  }
+
+  .product-info h1 {
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+
+  .product-price {
+    font-size: 26px;
+    margin-bottom: 12px;
+  }
+
+  .product-stock {
+    padding: 6px 12px;
+    font-size: 12px;
+    margin-bottom: 16px;
+  }
+
+  .product-description {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .product-specs h3 {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .specs-table td {
+    padding: 8px 0;
+    font-size: 14px;
+  }
+
+  .product-actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .quantity-control button {
+    width: 38px;
+    height: 38px;
+    font-size: 18px;
+  }
+
+  .qty-input {
+    width: 44px;
+    font-size: 15px;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .btn-lg {
+    padding: 12px 24px;
+    font-size: 15px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .product-highlights {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .highlight-card {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .highlight-icon {
+    font-size: 24px;
+  }
+
+  .product-reviews {
+    margin-top: 24px;
+  }
+
+  .review-item {
+    padding: 14px;
+  }
+
+  .review-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .add-review-form {
+    padding: 16px;
+    margin-top: 20px;
+  }
+
+  .add-review-form h3 {
+    font-size: 17px;
+  }
+
+  .form-input,
+  .form-textarea {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .star {
+    font-size: 24px;
+  }
+}
+
 /* ===== Tablet (768px - 1024px) ===== */
 @media (min-width: 768px) and (max-width: 1024px) {
   .product-page {

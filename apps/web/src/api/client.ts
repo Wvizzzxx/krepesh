@@ -147,8 +147,9 @@ const mockApi = {
 
 // Detect if running in static mode (no backend available)
 const isStaticBuild = import.meta.env.VITE_STATIC_BUILD === 'true'
+const isGitHubPages = typeof window !== 'undefined' && window.location.hostname.includes('github.io')
 
-const api: AxiosInstance = isStaticBuild
+const api: AxiosInstance = (isStaticBuild || isGitHubPages)
   ? mockApi
   : (() => {
       const instance = axios.create({

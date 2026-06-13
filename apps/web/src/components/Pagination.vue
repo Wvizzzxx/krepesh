@@ -118,4 +118,26 @@ const visiblePages = computed(() => {
   color: var(--gray);
   font-size: 14px;
 }
+
+/* ===== Mobile ===== */
+@media (max-width: 767px) {
+  .pagination {
+    gap: 4px;
+    margin-top: 24px;
+  }
+
+  .pagination-btn {
+    padding: 8px 10px;
+    font-size: 12px;
+    min-width: 32px;
+  }
+
+  .pagination-info {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+    margin-top: 8px;
+    font-size: 12px;
+  }
+}
 </style>
