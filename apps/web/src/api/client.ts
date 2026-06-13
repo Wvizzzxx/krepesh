@@ -55,16 +55,16 @@ function handleMockRequest(method: string, url: string, body?: any): any {
   if (!match) return { success: false, error: 'Not found' }
 
   switch (match.route) {
-    case 'GET /products': {
+case 'GET /products': {
       const params = new URLSearchParams(url.split('?')[1] || '')
       let items = getProductsWithCategories()
       const search = params.get('search') || ''
-      if (search) {
+      if (search && search !== 'undefined') {
         const q = search.toLowerCase()
         items = items.filter(p => p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q))
       }
       const catId = params.get('categoryId')
-      if (catId) items = items.filter(p => (typeof p.categoryId === 'object' ? (p.categoryId as any)._id : p.categoryId) === catId)
+      if (catId && catId !== 'undefined') items = items.filter(p => (typeof p.categoryId === 'object' ? (p.categoryId as any)._id : p.categoryId) === catId)
       const sortBy = params.get('sortBy') || 'createdAt'
       const sortOrder = params.get('sortOrder') || 'desc'
       items.sort((a: any, b: any) => {
@@ -130,9 +130,17 @@ const mockApi = {
       use: (_fulfilled: any, _rejected?: any) => {},
     },
   },
-  get(url: string, config?: AxiosRequestConfig) {
-    const fullUrl = config?.params ? `${url}?${new URLSearchParams(config.params).toString()}` : url
-    return mockDelay(handleMockRequest('GET', fullUrl))
+get(url: string, config?: AxiosRequestConfig) {
+    if (config?.params) {
+      const clean: Record<string, string> = {}
+      for (const [k, v] of Object.entries(config.params)) {
+        if (v != null && v !== undefined && v !== '') clean[k] = String(v)
+      }
+      const qs = new URLSearchParams(clean).toString()
+      const fullUrl = qs ? `${url}?${qs}` : url
+      return mockDelay(handleMockRequest('GET', fullUrl))
+    }
+    return mockDelay(handleMockRequest('GET', url))
   },
   post(url: string, data?: any, _config?: AxiosRequestConfig) {
     return mockDelay(handleMockRequest('POST', url, data))
