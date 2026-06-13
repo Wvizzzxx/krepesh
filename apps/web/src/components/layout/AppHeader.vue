@@ -34,20 +34,23 @@
           </template>
           <router-link v-else to="/login" class="login-btn">Войти</router-link>
         </div>
+        <button class="burger-btn" @click="mobileMenuOpen = !mobileMenuOpen">
+          <span :class="{ open: mobileMenuOpen }">☰</span>
+        </button>
       </div>
     </div>
 
-    <nav class="header-nav">
+    <nav class="header-nav" :class="{ 'nav-open': mobileMenuOpen }">
       <div class="container nav-inner">
         <ul class="nav-list">
           <li v-for="link in navLinks" :key="link.label">
-            <router-link :to="link.to">{{ link.label }}</router-link>
+            <router-link :to="link.to" @click="mobileMenuOpen = false">{{ link.label }}</router-link>
           </li>
           <li v-if="authStore.isAdmin">
             <a href="http://localhost:3002" target="_blank">Админ-панель</a>
           </li>
         </ul>
-        <router-link to="/promotions" class="nav-cta">🔥 Акции</router-link>
+        <router-link to="/promotions" class="nav-cta" @click="mobileMenuOpen = false">🔥 Акции</router-link>
       </div>
     </nav>
   </header>
@@ -63,6 +66,7 @@ const router = useRouter()
 const authStore = useAuthStore()
 const cartStore = useCartStore()
 const searchQuery = ref('')
+const mobileMenuOpen = ref(false)
 
 const navLinks = [
   { label: 'Главная', to: '/' },
@@ -256,6 +260,99 @@ function logout() {
 .nav-cta:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 28px rgba(255, 107, 0, 0.4);
+}
+
+/* ===== Burger button (hidden on desktop) ===== */
+.burger-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  padding: 4px 8px;
+  color: var(--dark);
+}
+
+/* ===== Mobile (< 768px) ===== */
+@media (max-width: 767px) {
+  .header-top {
+    display: none;
+  }
+
+  .header-main-inner {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+
+  .logo-icon {
+    font-size: 24px;
+  }
+
+  .search-box {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .search-box input {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .search-box button {
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  .burger-btn {
+    display: block;
+  }
+
+  .header-actions {
+    gap: 8px;
+    margin-left: auto;
+  }
+
+  .login-btn,
+  .user-btn,
+  .logout-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .header-nav {
+    display: none;
+  }
+
+  .header-nav.nav-open {
+    display: block;
+  }
+
+  .nav-inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .nav-list {
+    flex-direction: column;
+  }
+
+  .nav-list li a {
+    padding: 12px 16px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .nav-cta {
+    display: block;
+    text-align: center;
+    margin: 12px 16px;
+    padding: 10px 16px;
+    font-size: 14px;
+  }
 }
 
 /* ===== Tablet (768px - 1024px) ===== */

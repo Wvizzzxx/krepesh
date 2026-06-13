@@ -110,6 +110,30 @@
   font-size: 14px;
 }
 
+/* ===== Mobile (< 768px) ===== */
+@media (max-width: 767px) {
+  .footer-main {
+    padding: 32px 0 20px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .footer-col h3 {
+    font-size: 20px;
+  }
+
+  .footer-col h4 {
+    font-size: 15px;
+  }
+
+  .footer-bottom p {
+    font-size: 12px;
+  }
+}
+
 /* ===== Tablet (768px - 1024px) ===== */
 @media (min-width: 768px) and (max-width: 1024px) {
   .footer-main {
