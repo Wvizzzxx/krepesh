@@ -2,12 +2,23 @@ import axios, { AxiosInstance, AxiosError } from 'axios'
 
 const api: AxiosInstance = axios.create({
   baseURL: '/api',
-  headers: { 'Content-Type': 'application/json' },
 })
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token')
   if (token) config.headers.Authorization = `Bearer ${token}`
+
+  // Let browser set proper multipart boundary automatically
+  if (typeof FormData !== 'undefined' && config.data instanceof FormData) {
+    const headers = config.headers as any
+    if (headers?.delete) {
+      headers.delete('Content-Type')
+      headers.delete('content-type')
+    }
+    delete headers?.['Content-Type']
+    delete headers?.['content-type']
+  }
+
   return config
 })
 

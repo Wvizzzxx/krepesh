@@ -4,7 +4,9 @@
       <div class="container footer-grid">
         <div class="footer-col">
           <h3>КРЕПЁЖ</h3>
-          <p>Надежный поставщик крепежных изделий с 2010 года. Более 10 000 наименований продукции.</p>
+          <p>
+            Надежный поставщик крепежных изделий с 2010 года. Более 10 000 наименований продукции.
+          </p>
         </div>
         <div class="footer-col">
           <h4>Каталог</h4>
@@ -21,19 +23,24 @@
             <li><router-link to="/about">О компании</router-link></li>
             <li><router-link to="/delivery">Доставка</router-link></li>
             <li><router-link to="/contacts">Контакты</router-link></li>
+            <li><router-link to="/promotions">Акции</router-link></li>
+            <li><router-link to="/brands">Бренды</router-link></li>
+            <li><router-link to="/reviews">Отзывы</router-link></li>
+            <li><router-link to="/certificates">Сертификаты</router-link></li>
+            <li><router-link to="/privacy">Политика конфиденциальности</router-link></li>
           </ul>
         </div>
-        <div class="footer-col">
-          <h4>Контакты</h4>
-<p>📍 г. Москва, ул. Промышленная, д. 1</p>
-<p>📞 <a href="tel:+78001234567">+7 (800) 123-45-67</a></p>
-<p>✉️ <a href="mailto:info@krepesh.ru">info@krepesh.ru</a></p>
-        </div>
+         <div class="footer-col">
+           <h4>Контакты</h4>
+           <p><Icon name="map-marker-alt" /> г. Москва, ул. Промышленная, д. 1</p>
+           <p><Icon name="phone" /> <a href="tel:+78001234567">+7 (800) 123-45-67</a></p>
+           <p><Icon name="envelope" /> <a href="mailto:info@krepesh.ru">info@krepesh.ru</a></p>
+         </div>
       </div>
     </div>
     <div class="footer-bottom">
       <div class="container">
-        <p>© 2024 Крепёж. Все права защищены.</p>
+        <p>© 2024 Крепёж. Все права защищены. <router-link to="/privacy">Политика конфиденциальности</router-link></p>
       </div>
     </div>
   </footer>
@@ -52,7 +59,7 @@
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 40px;
 }
 
@@ -101,5 +108,25 @@
 .footer-bottom p {
   color: #666;
   font-size: 14px;
+}
+
+/* ===== Tablet (768px - 1024px) ===== */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .footer-main {
+    padding: 36px 0 24px;
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+
+  .footer-col h3 {
+    font-size: 20px;
+  }
+
+  .footer-col h4 {
+    font-size: 15px;
+  }
 }
 </style>

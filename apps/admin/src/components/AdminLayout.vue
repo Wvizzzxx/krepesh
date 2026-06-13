@@ -6,13 +6,25 @@
         <span class="logo-text">КРЕПЁЖ</span>
       </router-link>
       <nav class="sidebar-nav">
-        <router-link to="/" class="nav-item" :class="{ active: currentPath === '' || currentPath === '/' }">
+        <router-link
+          to="/"
+          class="nav-item"
+          :class="{ active: currentPath === '' || currentPath === '/' }"
+        >
           <span class="nav-icon">📊</span> Дашборд
         </router-link>
-        <router-link to="/products" class="nav-item" :class="{ active: currentPath === '/products' }">
+        <router-link
+          to="/products"
+          class="nav-item"
+          :class="{ active: currentPath === '/products' }"
+        >
           <span class="nav-icon">📦</span> Товары
         </router-link>
-        <router-link to="/categories" class="nav-item" :class="{ active: currentPath === '/categories' }">
+        <router-link
+          to="/categories"
+          class="nav-item"
+          :class="{ active: currentPath === '/categories' }"
+        >
           <span class="nav-icon">🏷️</span> Категории
         </router-link>
         <router-link to="/orders" class="nav-item" :class="{ active: currentPath === '/orders' }">
@@ -21,11 +33,21 @@
         <router-link to="/users" class="nav-item" :class="{ active: currentPath === '/users' }">
           <span class="nav-icon">👥</span> Пользователи
         </router-link>
+        <router-link to="/reviews" class="nav-item" :class="{ active: currentPath === '/reviews' }">
+          <span class="nav-icon">⭐</span> Отзывы
+        </router-link>
+        <router-link to="/assets" class="nav-item" :class="{ active: currentPath === '/assets' }">
+          <span class="nav-icon">🎨</span> Иконки и изображения
+        </router-link>
+        <router-link to="/site-photos" class="nav-item" :class="{ active: currentPath === '/site-photos' }">
+          <span class="nav-icon">🖼️</span> Фото сайта
+        </router-link>
+        <router-link to="/email-settings" class="nav-item" :class="{ active: currentPath === '/email-settings' }">
+          <span class="nav-icon">📧</span> Настройки Email
+        </router-link>
       </nav>
       <div class="sidebar-footer">
-        <button @click="auth.logout(); router.push('/login')" class="logout-btn">
-          <span class="nav-icon">🚪</span> Выйти
-        </button>
+        <button @click="logout" class="logout-btn"><span class="nav-icon">🚪</span> Выйти</button>
       </div>
     </aside>
     <main class="admin-main">
@@ -52,7 +74,12 @@ const router = useRouter()
 const route = useRoute()
 const auth = useAuthStore()
 
-const currentPath = computed(() => route.path === '/' ? '' : route.path)
+const currentPath = computed(() => (route.path === '/' ? '' : route.path))
+
+function logout() {
+  auth.logout()
+  router.push('/login')
+}
 
 const pageTitle = computed(() => {
   const titles: Record<string, string> = {
@@ -61,6 +88,10 @@ const pageTitle = computed(() => {
     '/categories': 'Категории',
     '/orders': 'Заказы',
     '/users': 'Пользователи',
+    '/reviews': 'Отзывы',
+    '/assets': 'Иконки и изображения',
+    '/site-photos': 'Фото сайта',
+    '/email-settings': 'Настройки Email',
   }
   const detailMatch = route.path.match(/^\/orders\/(.+)/)
   if (detailMatch) return 'Детали заказа'
@@ -72,11 +103,12 @@ const pageTitle = computed(() => {
 .admin-layout {
   display: flex;
   min-height: 100vh;
+  background: transparent;
 }
 
 .admin-sidebar {
   width: 260px;
-  background: var(--white);
+  background: var(--surface);
   border-right: 1px solid var(--gray-light);
   display: flex;
   flex-direction: column;
@@ -91,7 +123,7 @@ const pageTitle = computed(() => {
   padding: 24px;
   border-bottom: 1px solid var(--gray-light);
   text-decoration: none;
-  color: var(--primary);
+  color: var(--dark);
 }
 
 .logo-icon {
@@ -114,19 +146,19 @@ const pageTitle = computed(() => {
   gap: 12px;
   padding: 12px 16px;
   border-radius: 8px;
-  color: var(--dark);
+  color: var(--text);
   text-decoration: none;
   font-weight: 500;
   transition: all 0.2s;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .nav-item:hover {
-  background: var(--gray-light);
+  background: var(--surface-strong);
 }
 
 .nav-item.active {
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
   color: var(--white);
 }
 
@@ -145,35 +177,36 @@ const pageTitle = computed(() => {
   gap: 12px;
   width: 100%;
   padding: 12px 16px;
-  border: none;
-  background: none;
-  border-radius: 8px;
+  border: 1px solid var(--gray-light);
+  border-radius: 10px;
   cursor: pointer;
   font-size: 15px;
-  color: var(--gray);
+  color: var(--dark);
   transition: all 0.2s;
+  background: var(--white);
 }
 
 .logout-btn:hover {
-  background: #fef2f2;
-  color: #dc2626;
+  color: var(--error);
+  border-color: rgba(220, 38, 38, 0.35);
 }
 
 .admin-main {
   flex: 1;
-  background: var(--gray-light);
+  background: transparent;
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
 
 .admin-header {
-  background: var(--white);
+  background: var(--surface);
   padding: 20px 32px;
   border-bottom: 1px solid var(--gray-light);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
 }
 
 .page-title {
@@ -188,16 +221,17 @@ const pageTitle = computed(() => {
 }
 
 .user-avatar {
-  width: 40px;
-  height: 40px;
-  background: var(--primary);
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--white);
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+  color: #fff;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 18px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
 }
 
 .user-name {
@@ -207,5 +241,6 @@ const pageTitle = computed(() => {
 .admin-content {
   flex: 1;
   padding: 32px;
+  background: transparent;
 }
 </style>

@@ -10,6 +10,9 @@ export interface IProduct {
   images: string[]
   stock: number
   specifications: Record<string, string>
+  discountPrice: number | null
+  averageRating: number
+  reviewCount: number
   createdAt: Date
   updatedAt: Date
 }
@@ -23,6 +26,9 @@ const productSchema = new mongoose.Schema<IProduct>({
   images: [{ type: String }],
   stock: { type: Number, default: 0, min: 0 },
   specifications: { type: Map, of: String },
+  discountPrice: { type: Number, min: 0, default: null },
+  averageRating: { type: Number, default: 0 },
+  reviewCount: { type: Number, default: 0 },
 }, { timestamps: true })
 
 productSchema.index({ slug: 1 })

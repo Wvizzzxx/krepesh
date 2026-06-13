@@ -4,6 +4,14 @@ import { useAuthStore } from '../stores/auth'
 const routes = [
   { path: '/', name: 'Home', component: () => import('../views/Home.vue') },
   { path: '/catalog', name: 'Catalog', component: () => import('../views/Catalog.vue') },
+  { path: '/promotions', name: 'Promotions', component: () => import('../views/Promotions.vue') },
+  { path: '/brands', name: 'Brands', component: () => import('../views/Brands.vue') },
+  { path: '/reviews', name: 'Reviews', component: () => import('../views/Reviews.vue') },
+  {
+    path: '/certificates',
+    name: 'Certificates',
+    component: () => import('../views/Certificates.vue'),
+  },
   { path: '/product/:id', name: 'Product', component: () => import('../views/Product.vue') },
   { path: '/cart', name: 'Cart', component: () => import('../views/Cart.vue') },
   { path: '/checkout', name: 'Checkout', component: () => import('../views/Checkout.vue') },
@@ -14,10 +22,11 @@ const routes = [
   { path: '/about', name: 'About', component: () => import('../views/About.vue') },
   { path: '/contacts', name: 'Contacts', component: () => import('../views/Contacts.vue') },
   { path: '/delivery', name: 'Delivery', component: () => import('../views/Delivery.vue') },
+  { path: '/privacy', name: 'Privacy', component: () => import('../views/Privacy.vue') },
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 })
 

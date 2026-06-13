@@ -227,4 +227,30 @@ onMounted(async () => {
 .btn-primary:hover {
   background: var(--primary-hover);
 }
+
+/* ===== Tablet (768px - 1024px) ===== */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .orders-page {
+    padding: 24px 0;
+  }
+
+  .orders-page h1 {
+    font-size: 26px;
+    margin-bottom: 24px;
+  }
+
+  .order-card {
+    padding: 18px;
+  }
+
+  .order-number {
+    font-size: 16px;
+  }
+
+  .order-info {
+    gap: 20px;
+    font-size: 14px;
+    flex-wrap: wrap;
+  }
+}
 </style>

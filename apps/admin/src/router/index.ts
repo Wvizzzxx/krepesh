@@ -14,6 +14,10 @@ const routes = [
       { path: 'orders', component: () => import('../views/Orders.vue') },
       { path: 'orders/:id', component: () => import('../views/OrderDetail.vue') },
       { path: 'users', component: () => import('../views/Users.vue') },
+      { path: 'reviews', component: () => import('../views/Reviews.vue') },
+      { path: 'assets', component: () => import('../views/Assets.vue') },
+      { path: 'site-photos', component: () => import('../views/SitePhotos.vue') },
+      { path: 'email-settings', component: () => import('../views/EmailSettings.vue') },
     ],
   },
 ]

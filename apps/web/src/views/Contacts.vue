@@ -4,31 +4,31 @@
       <h1>Контакты</h1>
       
       <div class="contacts-layout">
-        <div class="contacts-info">
-          <div class="contact-block">
-            <h3>📍 Адрес</h3>
-            <p>123456, г. Москва</p>
-            <p>ул. Промышленная, д. 1, стр. 2</p>
-          </div>
+         <div class="contacts-info">
+           <div class="contact-block">
+             <h3><Icon name="map-marker-alt" color="#ff6b00" /> Адрес</h3>
+             <p>123456, г. Москва</p>
+             <p>ул. Промышленная, д. 1, стр. 2</p>
+           </div>
 
-          <div class="contact-block">
-            <h3>📞 Телефон</h3>
-            <p>+7 (800) 123-45-67</p>
-            <p>+7 (495) 123-45-67</p>
-          </div>
+           <div class="contact-block">
+             <h3><Icon name="phone" color="#ff6b00" /> Телефон</h3>
+             <p>+7 (800) 123-45-67</p>
+             <p>+7 (495) 123-45-67</p>
+           </div>
 
-          <div class="contact-block">
-            <h3>✉️ Email</h3>
-            <p>info@krepesh.ru</p>
-            <p>zakaz@krepesh.ru</p>
-          </div>
+           <div class="contact-block">
+             <h3><Icon name="envelope" color="#ff6b00" /> Email</h3>
+             <p>info@krepesh.ru</p>
+             <p>zakaz@krepesh.ru</p>
+           </div>
 
-          <div class="contact-block">
-            <h3>🕒 Время работы</h3>
-            <p>Пн-Пт: 9:00 — 18:00</p>
-            <p>Сб-Вс: Выходной</p>
-          </div>
-        </div>
+           <div class="contact-block">
+             <h3><Icon name="clock" color="#ff6b00" /> Время работы</h3>
+             <p>Пн-Пт: 9:00 — 18:00</p>
+             <p>Сб-Вс: Выходной</p>
+           </div>
+         </div>
 
         <div class="contacts-form">
           <h2>Напишите нам</h2>
@@ -160,5 +160,34 @@ function sendMessage() {
 
 .btn-primary:hover {
   background: var(--primary-hover);
+}
+
+/* ===== Tablet (768px - 1024px) ===== */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .info-page {
+    padding: 24px 0;
+  }
+
+  .info-page h1 {
+    font-size: 28px;
+    margin-bottom: 28px;
+  }
+
+  .contacts-layout {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+
+  .contact-block {
+    padding: 18px;
+  }
+
+  .contact-block h3 {
+    font-size: 16px;
+  }
+
+  .contacts-form h2 {
+    font-size: 20px;
+  }
 }
 </style>

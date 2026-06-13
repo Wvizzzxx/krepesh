@@ -69,7 +69,9 @@
             <td>{{ item.productName }}</td>
             <td>{{ item.price }} ₽</td>
             <td>{{ item.quantity }}</td>
-            <td><strong>{{ item.price * item.quantity }} ₽</strong></td>
+            <td>
+              <strong>{{ item.price * item.quantity }} ₽</strong>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -149,6 +151,7 @@ onMounted(load)
   border-radius: 12px;
   padding: 24px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  color: var(--dark);
 }
 
 .detail-card h3 {
@@ -176,6 +179,7 @@ onMounted(load)
 
 .detail-value {
   font-weight: 500;
+  color: var(--dark);
 }
 
 .detail-value.primary {
@@ -185,6 +189,8 @@ onMounted(load)
 }
 
 .form-input {
+  color: var(--dark);
+  background: var(--white);
   padding: 8px 12px;
   border: 2px solid var(--gray-light);
   border-radius: 6px;
@@ -214,6 +220,7 @@ onMounted(load)
 .data-table td {
   padding: 12px 16px;
   border-top: 1px solid var(--gray-light);
+  color: var(--dark);
 }
 
 .empty-state {

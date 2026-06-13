@@ -20,7 +20,13 @@
             <td class="ellipsis-cell">{{ cat.description || '—' }}</td>
             <td class="actions-cell">
               <button class="btn-icon" title="Редактировать" @click="openModal(cat)">✏️</button>
-              <button class="btn-icon btn-icon--danger" title="Удалить" @click="deleteCategory(cat)">🗑️</button>
+              <button
+                class="btn-icon btn-icon--danger"
+                title="Удалить"
+                @click="deleteCategory(cat)"
+              >
+                🗑️
+              </button>
             </td>
           </tr>
         </tbody>
@@ -37,7 +43,7 @@
         <div class="modal-body">
           <div class="form-group">
             <label>Название *</label>
-            <input type="text" v-model="form.name" class="form-input" placeholder="Болты">
+            <input type="text" v-model="form.name" class="form-input" placeholder="Болты" />
           </div>
           <div class="form-group">
             <label>Описание</label>
@@ -46,9 +52,21 @@
           <div class="form-group">
             <label>Изображение</label>
             <div class="image-upload-area">
-              <input type="file" ref="fileInput" accept="image/*" @change="onFileSelected" class="hidden-input">
-              <button class="btn btn-outline" @click="$refs.fileInput.click()">📷 Выбрать файл</button>
-              <img v-if="previewImage || existingImage" :src="previewImage || existingImage" class="image-preview">
+              <input
+                type="file"
+                ref="fileInput"
+                accept="image/*"
+                @change="onFileSelected"
+                class="hidden-input"
+              />
+              <button class="btn btn-outline" type="button" @click="fileInput?.click()">
+                📷 Выбрать файл
+              </button>
+              <img
+                v-if="previewImage || existingImage"
+                :src="previewImage || existingImage"
+                class="image-preview"
+              />
             </div>
           </div>
         </div>
@@ -106,30 +124,41 @@ function onFileSelected(e: Event) {
   if (!file) return
   selectedFile.value = file
   const reader = new FileReader()
-  reader.onload = (ev) => { previewImage.value = ev.target?.result as string }
+  reader.onload = (ev) => {
+    previewImage.value = ev.target?.result as string
+  }
   reader.readAsDataURL(file)
 }
 
 async function saveCategory() {
-  if (!form.name) { message.error('Введите название'); return }
+  if (!form.name) {
+    message.error('Введите название')
+    return
+  }
   try {
     saving.value = true
     let category: Category
     if (editingId.value) {
-      const { data } = await api.put<{ success: boolean; data: Category }>(`/categories/${editingId.value}`, { name: form.name, description: form.description })
+      const { data } = await api.put<{ success: boolean; data: Category }>(
+        `/categories/${editingId.value}`,
+        { name: form.name, description: form.description },
+      )
       category = data.data
       if (selectedFile.value) {
         const formData = new FormData()
         formData.append('image', selectedFile.value)
-        await api.post(`/categories/${category._id}/image`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+        await api.post(`/categories/${category._id}/image`, formData)
       }
     } else {
-      const { data } = await api.post<{ success: boolean; data: Category }>('/categories', { name: form.name, description: form.description })
+      const { data } = await api.post<{ success: boolean; data: Category }>('/categories', {
+        name: form.name,
+        description: form.description,
+      })
       category = data.data
       if (selectedFile.value) {
         const formData = new FormData()
         formData.append('image', selectedFile.value)
-        await api.post(`/categories/${category._id}/image`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+        await api.post(`/categories/${category._id}/image`, formData)
       }
     }
     message.success(editingId.value ? 'Обновлено' : 'Создано')
@@ -144,8 +173,12 @@ async function saveCategory() {
 
 function deleteCategory(cat: Category) {
   if (!confirm(`Удалить "${cat.name}"?`)) return
-  api.delete(`/categories/${cat._id}`)
-    .then(() => { message.success('Удалено'); load() })
+  api
+    .delete(`/categories/${cat._id}`)
+    .then(() => {
+      message.success('Удалено')
+      load()
+    })
     .catch((e: any) => message.error(e.message))
 }
 

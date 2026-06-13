@@ -3,7 +3,11 @@ export interface User {
   _id: string;
   email: string;
   name: string;
+  phone?: string;
+  avatar?: string;
+  address?: string;
   role: 'admin' | 'user';
+  emailVerified?: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -51,6 +55,9 @@ export interface Product {
   images: string[];
   stock: number;
   specifications: Record<string, string>;
+  discountPrice?: number | null;
+  averageRating: number;
+  reviewCount: number;
 }
 
 export interface CreateProductDTO {

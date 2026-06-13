@@ -31,6 +31,7 @@ export const createProductSchema = z.object({
   images: z.array(z.string()).default([]),
   stock: z.number().int().min(0, 'Stock cannot be negative').default(0),
   specifications: z.record(z.string()).optional().default({}),
+  discountPrice: z.number().min(0).nullable().optional().default(null),
 })
 
 export const updateProductSchema = z.object({
@@ -41,6 +42,7 @@ export const updateProductSchema = z.object({
   images: z.array(z.string()).optional(),
   stock: z.number().int().min(0).optional(),
   specifications: z.record(z.string()).optional(),
+  discountPrice: z.number().min(0).nullable().optional(),
 })
 
 export const createOrderSchema = z.object({
@@ -55,6 +57,7 @@ export const createOrderSchema = z.object({
     address: z.string().min(1),
     postalCode: z.string().min(1),
   }),
+  deliveryCost: z.number().min(0).optional(),
 })
 
 export const updateOrderStatusSchema = z.object({

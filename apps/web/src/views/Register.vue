@@ -46,7 +46,7 @@ async function register() {
   const result = await authStore.register(name.value, email.value, password.value)
   if (result.success) {
     message.success('Регистрация успешна!')
-    router.push('/')
+    router.push('/profile')
   } else {
     message.error(result.error || 'Ошибка регистрации')
   }
@@ -153,5 +153,24 @@ async function register() {
 
 .auth-footer a:hover {
   text-decoration: underline;
+}
+
+/* ===== Tablet (768px - 1024px) ===== */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .auth-page {
+    padding: 24px 0;
+  }
+
+  .auth-container {
+    max-width: 400px;
+  }
+
+  .auth-card {
+    padding: 36px 32px;
+  }
+
+  .auth-card h1 {
+    font-size: 24px;
+  }
 }
 </style>

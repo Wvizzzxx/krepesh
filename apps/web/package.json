@@ -8,6 +8,7 @@
     "lint": "eslint src --ext .ts,.vue"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@krepesh/types": "workspace:*",
     "axios": "^1.6.0",
     "naive-ui": "^2.38.0",

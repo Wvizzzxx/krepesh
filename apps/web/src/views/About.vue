@@ -9,28 +9,36 @@
           <p>Компания «Крепёж» работает на рынке крепежных изделий с 2010 года. Мы являемся одним из ведущих поставщиков крепежа в России, предлагая более 10 000 наименований продукции.</p>
         </div>
 
-        <div class="features-grid">
-          <div class="feature-item">
-            <div class="feature-icon">🏭</div>
-            <h3>Собственный склад</h3>
-            <p>Площадь склада 5 000 м² позволяет поддерживать широкий ассортимент на складе</p>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon">📋</div>
-            <h3>Сертификаты качества</h3>
-            <p>Вся продукция сертифицирована и соответствует ГОСТ и международным стандартам</p>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon">🤝</div>
-            <h3>Надежные партнеры</h3>
-            <p>Работаем напрямую с ведущими российскими и зарубежными производителями</p>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon">🚚</div>
-            <h3>Доставка по России</h3>
-            <p>Быстрая доставка в любой регион России транспортными компаниями</p>
-          </div>
-        </div>
+         <div class="features-grid">
+           <div class="feature-item">
+             <div class="feature-icon">
+               <Icon name="warehouse" size="3x" />
+             </div>
+             <h3>Собственный склад</h3>
+             <p>Площадь склада 5 000 м² позволяет поддерживать широкий ассортимент на складе</p>
+           </div>
+           <div class="feature-item">
+             <div class="feature-icon">
+               <Icon name="certificate" size="3x" />
+             </div>
+             <h3>Сертификаты качества</h3>
+             <p>Вся продукция сертифицирована и соответствует ГОСТ и международным стандартам</p>
+           </div>
+           <div class="feature-item">
+             <div class="feature-icon">
+               <Icon name="handshake" size="3x" />
+             </div>
+             <h3>Надежные партнеры</h3>
+             <p>Работаем напрямую с ведущими российскими и зарубежными производителями</p>
+           </div>
+           <div class="feature-item">
+             <div class="feature-icon">
+               <Icon name="truck" size="3x" />
+             </div>
+             <h3>Доставка по России</h3>
+             <p>Быстрая доставка в любой регион России транспортными компаниями</p>
+           </div>
+         </div>
 
         <div class="info-section">
           <h2>Наши преимущества</h2>
@@ -111,5 +119,38 @@
   color: var(--gray);
   font-size: 14px;
   line-height: 1.6;
+}
+
+/* ===== Tablet (768px - 1024px) ===== */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .info-page {
+    padding: 24px 0;
+  }
+
+  .info-page h1 {
+    font-size: 28px;
+    margin-bottom: 28px;
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .feature-item {
+    padding: 24px;
+  }
+
+  .feature-item h3 {
+    font-size: 16px;
+  }
+
+  .info-section {
+    margin-bottom: 32px;
+  }
+
+  .info-section h2 {
+    font-size: 20px;
+  }
 }
 </style>

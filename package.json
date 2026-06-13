@@ -8,10 +8,15 @@
     "dev:web": "pnpm --filter web dev",
     "dev:admin": "pnpm --filter admin dev",
     "dev:api": "pnpm --filter api dev",
-    "seed": "pnpm --filter api seed"
+    "seed": "pnpm --filter api seed",
+    "reset": "pnpm --filter api seed"
   },
   "devDependencies": {
     "turbo": "^1.10.0"
   },
-  "packageManager": "pnpm@8.10.0"
+  "packageManager": "pnpm@8.10.0",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^7.2.0",
+    "mongodb": "^7.2.0"
+  }
 }

@@ -9,3 +9,6 @@ export type { IProduct } from './Product'
 
 export { Order } from './Order'
 export type { IOrder, IOrderItem, IShippingAddress, OrderStatus } from './Order'
+
+export { Asset } from './Asset'
+export type { IAsset } from './Asset'

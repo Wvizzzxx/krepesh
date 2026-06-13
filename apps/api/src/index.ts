@@ -16,6 +16,8 @@ import { categoryRoutes } from './controllers/categoryController'
 import { productRoutes } from './controllers/productController'
 import { orderRoutes } from './controllers/orderController'
 import { adminRoutes } from './controllers/adminController'
+import { reviewRoutes } from './controllers/reviewController'
+import { assetRoutes } from './controllers/assetController'
 
 // ES module compatible __dirname
 const __filename = fileURLToPath(import.meta.url)
@@ -61,6 +63,14 @@ async function start(): Promise<void> {
       prefix: '/uploads/',
     })
 
+    // Serve static product images from the root images/ folder
+    const imagesDir = path.join(__dirname, '..', '..', '..', 'images')
+    await app.register(fastifyStatic, {
+      root: imagesDir,
+      prefix: '/images/',
+      decorateReply: false,
+    })
+
     // Register routes
     console.log('[API] Registering routes...')
     authRoutes(app)
@@ -68,6 +78,8 @@ async function start(): Promise<void> {
     productRoutes(app)
     orderRoutes(app)
     adminRoutes(app)
+    assetRoutes(app)
+    reviewRoutes(app)
 
     // Health check
     app.get('/api/health', async () => ({ status: 'ok', timestamp: new Date().toISOString() }))

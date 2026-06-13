@@ -34,6 +34,13 @@ a {
   padding: 0 24px;
 }
 
+/* ===== Tablet (768px - 1024px) ===== */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .container {
+    padding: 0 20px;
+  }
+}
+
 .page {
   min-height: calc(100vh - 200px);
 }

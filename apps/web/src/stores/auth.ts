@@ -11,18 +11,28 @@ export const useAuthStore = defineStore('auth', () => {
   const isLoggedIn = computed(() => !!token.value)
   const isAdmin = computed(() => user.value?.role === 'admin')
 
-  async function loginFn(email: string, password: string): Promise<void> {
-    const data = await login({ email, password })
-    user.value = data.user
-    token.value = data.token
-    localStorage.setItem('token', data.token)
+  async function loginFn(email: string, password: string): Promise<{ success: boolean; error?: string }> {
+    try {
+      const data = await login({ email, password })
+      user.value = data.user
+      token.value = data.token
+      localStorage.setItem('token', data.token)
+      return { success: true }
+    } catch (e: any) {
+      return { success: false, error: e?.response?.data?.message || e?.message || 'Ошибка входа' }
+    }
   }
 
-  async function registerFn(name: string, email: string, password: string): Promise<void> {
-    const data = await register({ name, email, password })
-    user.value = data.user
-    token.value = data.token
-    localStorage.setItem('token', data.token)
+  async function registerFn(name: string, email: string, password: string): Promise<{ success: boolean; error?: string }> {
+    try {
+      const data = await register({ name, email, password })
+      user.value = data.user
+      token.value = data.token
+      localStorage.setItem('token', data.token)
+      return { success: true }
+    } catch (e: any) {
+      return { success: false, error: e?.response?.data?.message || e?.message || 'Ошибка регистрации' }
+    }
   }
 
   async function fetchProfile(): Promise<void> {
@@ -32,6 +42,10 @@ export const useAuthStore = defineStore('auth', () => {
     } catch {
       logout()
     }
+  }
+
+  function updateUser(updatedUser: User): void {
+    user.value = { ...user.value, ...updatedUser }
   }
 
   function logout(): void {
@@ -47,5 +61,5 @@ export const useAuthStore = defineStore('auth', () => {
     fetchProfile()
   }
 
-  return { user, token, isLoggedIn, isAdmin, login: loginFn, register: registerFn, fetchProfile, logout }
+  return { user, token, isLoggedIn, isAdmin, login: loginFn, register: registerFn, fetchProfile, updateUser, logout }
 })

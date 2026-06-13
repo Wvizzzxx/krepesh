@@ -54,10 +54,23 @@ export function orderRoutes(app: FastifyInstance): void {
         await product.save()
       }
 
+      // Расчёт стоимости доставки на стороне сервера
+      function calculateDelivery(subtotal: number): number {
+        if (subtotal < 200) return 0         // Только самовывоз
+        if (subtotal >= 10000) return 0      // Бесплатно
+        if (subtotal >= 5000) return 200
+        if (subtotal >= 2000) return 390
+        if (subtotal >= 500) return 590
+        return 990
+      }
+
+      const deliveryCost = calculateDelivery(totalPrice)
+
       const order = await Order.create({
         userId: getJwtPayload(request).userId,
         items: orderItems,
-        totalPrice,
+        totalPrice: totalPrice + deliveryCost,
+        deliveryCost,
         shippingAddress: body.shippingAddress,
       })
 

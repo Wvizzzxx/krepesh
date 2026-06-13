@@ -14,9 +14,12 @@
       <table class="data-table" v-else-if="products.length">
         <thead>
           <tr>
-            <th>Название</th>
-            <th>Цена</th>
-            <th>Остаток</th>
+             <th>Название</th>
+             <th>Цена</th>
+             <th>Цена со скидкой</th>
+             <th>Остаток</th>
+            <th>Рейтинг</th>
+            <th>Отзывы</th>
             <th>Действия</th>
           </tr>
         </thead>
@@ -24,10 +27,29 @@
           <tr v-for="p in products" :key="p._id">
             <td>{{ p.name }}</td>
             <td>{{ p.price }} ₽</td>
+            <td>{{ p.discountPrice ? p.discountPrice + ' ₽' : '—' }}</td>
             <td>{{ p.stock }}</td>
+            <td>
+              <div class="rating-cell">
+                <span class="stars">
+                  {{ renderStars(p.averageRating || 0) }}
+                </span>
+                <span class="rating-value">{{ (p.averageRating || 0).toFixed(1) }}</span>
+              </div>
+            </td>
+            <td>{{ p.reviewCount || 0 }}</td>
             <td class="actions-cell">
+              <button
+                class="btn-icon"
+                title="Просмотреть/управление отзывами"
+                @click="viewReviews(p)"
+              >
+                💬
+              </button>
               <button class="btn-icon" title="Редактировать" @click="openModal(p)">✏️</button>
-              <button class="btn-icon btn-icon--danger" title="Удалить" @click="deleteProduct(p)">🗑️</button>
+              <button class="btn-icon btn-icon--danger" title="Удалить" @click="deleteProduct(p)">
+                🗑️
+              </button>
             </td>
           </tr>
         </tbody>
@@ -45,27 +67,51 @@
         <div class="modal-body">
           <div class="form-group">
             <label>Название *</label>
-            <input type="text" v-model="form.name" class="form-input" placeholder="Болт М6x20">
+            <input type="text" v-model="form.name" class="form-input" placeholder="Болт М6x20" />
           </div>
           <div class="form-group">
             <label>Описание *</label>
-            <textarea v-model="form.description" class="form-input" rows="3" placeholder="Описание товара"></textarea>
+            <textarea
+              v-model="form.description"
+              class="form-input"
+              rows="3"
+              placeholder="Описание товара"
+            ></textarea>
           </div>
           <div class="form-row">
             <div class="form-group">
               <label>Цена *</label>
-              <input type="number" v-model.number="form.price" class="form-input" min="0" step="0.01">
+              <input
+                type="number"
+                v-model.number="form.price"
+                class="form-input"
+                min="0"
+                step="0.01"
+              />
             </div>
             <div class="form-group">
               <label>Остаток</label>
-              <input type="number" v-model.number="form.stock" class="form-input" min="0">
+              <input type="number" v-model.number="form.stock" class="form-input" min="0" />
             </div>
+          </div>
+          <div class="form-group">
+            <label>Цена со скидкой (необязательно)</label>
+            <input
+              type="number"
+              v-model.number="form.discountPrice"
+              class="form-input"
+              min="0"
+              step="0.01"
+              placeholder="Оставьте пусто если нет скидки"
+            />
           </div>
           <div class="form-group">
             <label>Категория *</label>
             <select v-model="form.categoryId" class="form-input">
               <option value="">Выберите категорию</option>
-              <option v-for="cat in categories" :key="cat._id" :value="cat._id">{{ cat.name }}</option>
+              <option v-for="cat in categories" :key="cat._id" :value="cat._id">
+                {{ cat.name }}
+              </option>
             </select>
           </div>
 
@@ -73,15 +119,24 @@
           <div class="form-group">
             <label>Изображения</label>
             <div class="image-upload-area">
-              <input type="file" ref="fileInput" multiple accept="image/*" @change="onFilesSelected" class="hidden-input">
-              <button class="btn btn-outline" @click="$refs.fileInput.click()">📷 Выбрать файлы</button>
+              <input
+                type="file"
+                ref="fileInput"
+                multiple
+                accept="image/*"
+                @change="onFilesSelected"
+                class="hidden-input"
+              />
+              <button class="btn btn-outline" type="button" @click="fileInput?.click()">
+                📷 Выбрать файлы
+              </button>
               <div v-if="previewImages.length || existingImages.length" class="image-preview-grid">
-                <div v-for="(img, i) in previewImages" :key="'prev'+i" class="image-preview-item">
-                  <img :src="img">
+                <div v-for="(img, i) in previewImages" :key="'prev' + i" class="image-preview-item">
+                  <img :src="img" />
                   <button class="remove-img" @click="previewImages.splice(i, 1)">✕</button>
                 </div>
-                <div v-for="(img, i) in existingImages" :key="'ex'+i" class="image-preview-item">
-                  <img :src="img">
+                <div v-for="(img, i) in existingImages" :key="'ex' + i" class="image-preview-item">
+                  <img :src="img" />
                   <button class="remove-img" @click="removeExistingImage(i)">✕</button>
                 </div>
               </div>
@@ -103,7 +158,22 @@
 import { ref, reactive, onMounted } from 'vue'
 import { useMessage } from 'naive-ui'
 import api from '../api/client'
-import type { Product, Category } from '@krepesh/types'
+import type { Category } from '@krepesh/types'
+
+interface Product {
+  _id: string
+  name: string
+  slug: string
+  description: string
+  price: number
+  categoryId: string
+  images: string[]
+  stock: number
+  specifications: Record<string, string>
+  discountPrice?: number | null
+  averageRating?: number
+  reviewCount?: number
+}
 
 const message = useMessage()
 
@@ -119,16 +189,13 @@ const selectedFiles = ref<File[]>([])
 const previewImages = ref<string[]>([])
 const existingImages = ref<string[]>([])
 
-const form = reactive({ name: '', description: '', price: 0, categoryId: '', stock: 0 })
+const form = reactive({ name: '', description: '', price: 0, categoryId: '', stock: 0, discountPrice: null as number | null })
 
 async function load() {
   loading.value = true
   loadError.value = ''
   try {
-    const [p, c] = await Promise.all([
-      api.get('/products?limit=200'),
-      api.get('/categories'),
-    ])
+    const [p, c] = await Promise.all([api.get('/products?limit=200'), api.get('/categories')])
     console.log('Products API response:', p.data)
     console.log('Categories API response:', c.data)
     products.value = p.data.data?.items || []
@@ -146,16 +213,22 @@ async function load() {
 function openModal(product?: Product) {
   editingId.value = product?._id || null
   if (product) {
+    const normalizedCategoryId =
+      typeof product.categoryId === 'string'
+        ? product.categoryId
+        : ((product.categoryId as any)?._id ?? '')
+
     Object.assign(form, {
       name: product.name,
       description: product.description,
       price: product.price,
-      categoryId: product.categoryId,
+      categoryId: normalizedCategoryId,
       stock: product.stock,
+      discountPrice: product.discountPrice || null,
     })
     existingImages.value = [...(product.images || [])]
   } else {
-    Object.assign(form, { name: '', description: '', price: 0, categoryId: '', stock: 0 })
+    Object.assign(form, { name: '', description: '', price: 0, categoryId: '', stock: 0, discountPrice: null })
     existingImages.value = []
   }
   previewImages.value = []
@@ -194,20 +267,41 @@ async function saveProduct() {
   }
   try {
     saving.value = true
+
+    // Send discountPrice as null when 0 or empty
+    const payload = { ...form, discountPrice: form.discountPrice || null }
+
+    // Create/update product without images first
     let product: Product
     if (editingId.value) {
-      const { data } = await api.put<{ success: boolean; data: Product }>(`/products/${editingId.value}`, form)
+      const { data } = await api.put<{ success: boolean; data: Product }>(
+        `/products/${editingId.value}`,
+        payload,
+      )
       product = data.data
     } else {
-      const { data } = await api.post<{ success: boolean; data: Product }>('/products', form)
+      const { data } = await api.post<{ success: boolean; data: Product }>('/products', payload)
       product = data.data
     }
 
+    // Upload images separately
     if (selectedFiles.value.length > 0) {
       const formData = new FormData()
-      for (const file of selectedFiles.value) formData.append('images', file)
+      for (const file of selectedFiles.value) {
+        formData.append('images', file)
+      }
+
+      // Add token to headers for authentication
+      const token = localStorage.getItem('token')
+      const headers: Record<string, string> = {
+        Authorization: `Bearer ${token}`,
+      }
+
       await api.post(`/products/${product._id}/images`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          ...headers,
+        },
       })
     }
 
@@ -215,6 +309,7 @@ async function saveProduct() {
     showModal.value = false
     load()
   } catch (e: any) {
+    console.error('Save product error:', e)
     message.error(e.message || 'Ошибка сохранения')
   } finally {
     saving.value = false
@@ -223,9 +318,24 @@ async function saveProduct() {
 
 function deleteProduct(product: Product) {
   if (!confirm(`Удалить "${product.name}"?`)) return
-  api.delete(`/products/${product._id}`)
-    .then(() => { message.success('Удалено'); load() })
+  api
+    .delete(`/products/${product._id}`)
+    .then(() => {
+      message.success('Удалено')
+      load()
+    })
     .catch((e: any) => message.error(e.message))
+}
+
+function renderStars(rating: number) {
+  const stars = Math.round(rating)
+  return '★'.repeat(stars) + '☆'.repeat(5 - stars)
+}
+
+function viewReviews(product: Product) {
+  alert(
+    `Просмотр отзывов для товара: ${product.name}\n\nЭта функция будет реализована в следующей версии.`,
+  )
 }
 
 onMounted(load)

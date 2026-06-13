@@ -7,14 +7,20 @@
         <span>🕒 Пн-Пт 9:00-18:00</span>
       </div>
     </div>
+
     <div class="header-main">
       <div class="container header-main-inner">
-        <router-link to="/" class="logo">
-          <span class="logo-icon">🔩</span>
-          <span class="logo-text">КРЕПЁЖ</span>
-        </router-link>
+         <router-link to="/" class="logo">
+           <span class="logo-icon">⚙️</span>
+           <span class="logo-text">КРЕПЁЖ</span>
+         </router-link>
         <div class="search-box">
-          <input type="text" placeholder="Поиск товаров..." v-model="searchQuery" @keyup.enter="doSearch">
+          <input
+            type="text"
+            placeholder="Поиск товаров..."
+            v-model="searchQuery"
+            @keyup.enter="doSearch"
+          />
           <button @click="doSearch">🔍</button>
         </div>
         <div class="header-actions">
@@ -30,16 +36,18 @@
         </div>
       </div>
     </div>
+
     <nav class="header-nav">
-      <div class="container">
+      <div class="container nav-inner">
         <ul class="nav-list">
-          <li><router-link to="/">Главная</router-link></li>
-          <li><router-link to="/catalog">Каталог</router-link></li>
-          <li><router-link to="/about">О компании</router-link></li>
-          <li><router-link to="/delivery">Доставка</router-link></li>
-          <li><router-link to="/contacts">Контакты</router-link></li>
-          <li v-if="authStore.isAdmin"><a href="http://localhost:3002" target="_blank">Админ-панель</a></li>
+          <li v-for="link in navLinks" :key="link.label">
+            <router-link :to="link.to">{{ link.label }}</router-link>
+          </li>
+          <li v-if="authStore.isAdmin">
+            <a href="http://localhost:3002" target="_blank">Админ-панель</a>
+          </li>
         </ul>
+        <router-link to="/promotions" class="nav-cta">🔥 Акции</router-link>
       </div>
     </nav>
   </header>
@@ -56,6 +64,17 @@ const authStore = useAuthStore()
 const cartStore = useCartStore()
 const searchQuery = ref('')
 
+const navLinks = [
+  { label: 'Главная', to: '/' },
+  { label: 'Каталог', to: '/catalog' },
+  { label: 'О компании', to: '/about' },
+  { label: 'Доставка', to: '/delivery' },
+  { label: 'Контакты', to: '/contacts' },
+  { label: 'Бренды', to: '/brands' },
+  { label: 'Отзывы', to: '/reviews' },
+  { label: 'Сертификаты', to: '/certificates' },
+]
+
 function doSearch() {
   if (searchQuery.value.trim()) {
     router.push({ path: '/catalog', query: { search: searchQuery.value } })
@@ -71,7 +90,7 @@ function logout() {
 <style scoped>
 .header {
   background: var(--white);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .header-top {
@@ -162,7 +181,9 @@ function logout() {
   border-radius: 10px;
 }
 
-.login-btn, .user-btn, .logout-btn {
+.login-btn,
+.user-btn,
+.logout-btn {
   padding: 10px 20px;
   border-radius: 6px;
   font-weight: 500;
@@ -190,8 +211,15 @@ function logout() {
 }
 
 .header-nav {
-  background: var(--dark);
+  background: #0f172a;
   padding: 0;
+}
+
+.nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
 }
 
 .nav-list {
@@ -211,5 +239,71 @@ function logout() {
 .nav-list li a:hover,
 .nav-list li a.router-link-active {
   background: var(--primary);
+}
+
+.nav-cta {
+  padding: 10px 22px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(255, 107, 0, 0.35);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.nav-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(255, 107, 0, 0.4);
+}
+
+/* ===== Tablet (768px - 1024px) ===== */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .header-top-inner {
+    justify-content: center;
+    gap: 16px;
+    font-size: 12px;
+  }
+
+  .header-main-inner {
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    font-size: 20px;
+  }
+
+  .logo-icon {
+    font-size: 26px;
+  }
+
+  .search-box {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .header-actions {
+    gap: 10px;
+    margin-left: auto;
+  }
+
+  .login-btn,
+  .user-btn,
+  .logout-btn {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  .nav-list li a {
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+
+  .nav-cta {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
 }
 </style>

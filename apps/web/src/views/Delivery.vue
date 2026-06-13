@@ -11,8 +11,8 @@
             <p>Доставка курьером до двери</p>
             <div class="delivery-details">
               <p><strong>Срок:</strong> 1-2 дня по Москве</p>
-              <p><strong>Стоимость:</strong> от 300 ₽</p>
-              <p><strong>Бесплатно:</strong> от 5 000 ₽</p>
+              <p><strong>Стоимость:</strong> от 200 ₽ до 990 ₽</p>
+              <p><strong>Бесплатно:</strong> от 10 000 ₽</p>
             </div>
           </div>
 
@@ -42,7 +42,8 @@
         <div class="info-section">
           <h2>Условия доставки</h2>
           <ul>
-            <li>Бесплатная доставка курьером при заказе от 5 000 ₽</li>
+           <li>Бесплатная доставка курьером при заказе от 10 000 ₽</li>
+           <li>Стоимость доставки зависит от суммы заказа: чем дешевле заказ — тем дороже доставка</li>
             <li>Доставка осуществляется в рабочие дни с 9:00 до 18:00</li>
             <li>Возможна доставка в выходные дни по согласованию</li>
             <li>Оплата при получении наличными или картой</li>
@@ -143,5 +144,39 @@
   color: var(--gray);
   line-height: 2;
   padding-left: 20px;
+}
+
+/* ===== Tablet (768px - 1024px) ===== */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .info-page {
+    padding: 24px 0;
+  }
+
+  .info-page h1 {
+    font-size: 28px;
+    margin-bottom: 28px;
+  }
+
+  .delivery-options {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .delivery-card {
+    padding: 24px;
+  }
+
+  .delivery-card h3 {
+    font-size: 18px;
+  }
+
+  .info-section {
+    margin-bottom: 32px;
+  }
+
+  .info-section h2 {
+    font-size: 20px;
+  }
 }
 </style>

@@ -1,0 +1,1 @@
+fix: GitHub Pages base path and SPA routing  

@@ -22,6 +22,7 @@ export interface IOrder {
   userId: mongoose.Types.ObjectId
   items: IOrderItem[]
   totalPrice: number
+  deliveryCost: number
   status: OrderStatus
   shippingAddress: IShippingAddress
   createdAt: Date
@@ -39,6 +40,7 @@ const orderSchema = new mongoose.Schema<IOrder>({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   items: { type: [orderItemSchema], required: true },
   totalPrice: { type: Number, required: true, min: 0 },
+  deliveryCost: { type: Number, default: 0, min: 0 },
   status: { type: String, enum: ['pending', 'confirmed', 'shipped', 'delivered', 'cancelled'], default: 'pending' },
   shippingAddress: {
     fullName: { type: String, required: true },

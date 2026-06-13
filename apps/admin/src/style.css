@@ -1,13 +1,17 @@
 :root {
-  --primary: #2d8cf0;
-  --primary-hover: #1b6fd4;
+  --primary: #ff6b00;
+  --primary-hover: #ff8c33;
+  --background: #f4f6fb;
+  --surface: #ffffff;
+  --surface-strong: #f7f8fb;
+  --text: #111827;
+  --muted: #6b7280;
+  --success: #16a34a;
+  --error: #dc2626;
   --white: #ffffff;
-  --gray: #808695;
-  --gray-light: #f0f0f0;
-  --dark: #303133;
-  --error: #ed4014;
-  --success: #19be6b;
-  --warning: #ff9900;
+  --dark: #111827;
+  --gray: #6b7280;
+  --gray-light: #e5e7eb;
 }
 
 * {
@@ -17,15 +21,35 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top right, rgba(255, 107, 0, 0.1), transparent 35%), var(--background);
+  min-height: 100vh;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+.admin-page {
   color: var(--dark);
-  background: var(--gray-light);
+}
+
+.page-heading {
+  color: var(--dark);
 }
 
 .container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 32px;
 }
 
 a {
@@ -35,4 +59,8 @@ a {
 
 a:hover {
   color: var(--primary-hover);
+}
+
+button:not(.btn) {
+  font-family: inherit;
 }
