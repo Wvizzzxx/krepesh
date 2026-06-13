@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   plugins: [vue()],
-  base: process.env.VITE_STATIC_BUILD === 'true' ? '/krepesh/' : '/',
+  base: '/krepesh/',
   server: {
     port: 3000,
     strictPort: true,
