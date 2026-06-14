@@ -93,6 +93,15 @@ const certificatePreviews = [
   { title: 'Протокол испытаний', assetKey: 'cert-preview-3' },
 ]
 
+const certImages: Record<string, string> = {
+  'cert-iso': import.meta.env.BASE_URL + 'images/iso-photo.jpg',
+  'cert-din': import.meta.env.BASE_URL + 'images/din_photo.jpg',
+  'cert-gost': import.meta.env.BASE_URL + 'images/гост_фото.jpg',
+  'cert-preview-1': import.meta.env.BASE_URL + 'images/iso-photo.jpg',
+  'cert-preview-2': import.meta.env.BASE_URL + 'images/din_photo.jpg',
+  'cert-preview-3': import.meta.env.BASE_URL + 'images/гост_фото.jpg',
+}
+
 function svgPlaceholder(label: string, width = 900, height = 620): string {
   const safeLabel = label || 'Фото сертификата'
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1f2937"/><stop offset="100%" stop-color="#111827"/></linearGradient></defs><rect width="100%" height="100%" fill="url(#g)"/><rect x="12%" y="10%" width="76%" height="80%" rx="16" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.18)"/><text x="50%" y="52%" text-anchor="middle" fill="#f8fafc" font-size="28" font-family="Arial, sans-serif">${safeLabel}</text><text x="50%" y="60%" text-anchor="middle" fill="#94a3b8" font-size="18" font-family="Arial, sans-serif">Замените на реальный скан</text></svg>`
@@ -100,6 +109,7 @@ function svgPlaceholder(label: string, width = 900, height = 620): string {
 }
 
 function getAssetImage(assetKey: string, width = 900, height = 620): string {
+  if (certImages[assetKey]) return certImages[assetKey]
   const asset = assetMap.value[assetKey]
   if (asset?.url) return asset.url
   return svgPlaceholder(asset?.name || assetKey, width, height)
